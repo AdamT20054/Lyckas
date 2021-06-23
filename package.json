@@ -20,6 +20,7 @@
   "dependencies": {
     "@pat.npm.js/discord-bot-framework": "github:AhsokaT/discord-bot-framework",
     "@types/node": "^15.12.2",
-    "discord.js": "github:discordjs/discord.js"
+    "discord.js": "github:discordjs/discord.js",
+    "dotenv": "^10.0.0"
   }
 }

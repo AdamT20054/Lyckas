@@ -5,9 +5,10 @@
 const { Client } = require('@pat.npm.js/discord-bot-framework');
 const { Intents } = require('discord.js');
 const { readdirSync } = require('fs');
+require('dotenv').config();
 
 const client = new Client({
-    token: 'TOKEN',
+    token: process.env.TOKEN,
     intents: Intents.ALL,
     partials: ['CHANNEL']
 });
