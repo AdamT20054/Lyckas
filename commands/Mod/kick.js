@@ -12,7 +12,7 @@ module.exports = new Command()
         new Parameter()
             .setKey('member')
             .setType('member')
-            .setDescription('The ID of a member or the member mention'),
+            .setDescription('The ID of a member or the member mention.'),
         new Parameter()
             .setKey('reason')
             .setDescription('The reason for kicking the member')
