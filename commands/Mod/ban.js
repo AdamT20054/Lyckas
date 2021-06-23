@@ -20,17 +20,11 @@ module.exports = new Command()
     .setCallback(async function(message, args, client) {
         const member = args.first();
 
-        if (!member || !member.guild)
-            return message.channel.send('You did not mention a member or provide a valid member ID.').catch(console.error);
-
         if (member.user.id === message.author.id)
             return message.channel.send(`Nice try, you can't escape that easily!`).catch(console.error);
 
         if (!member.bannable)
             return message.channel.send(`I cannot ban **${member.user.tag}** due to role hierarchy.`).catch(console.error);
-
-        //if (member.id === message.author.id)
-        //    return message.channel.send(`Nice try, you can\'t escape that easily!`).catch(console.error);;
 
         member.ban({ reason: args.get('reason') || 'No reason given' })
             .then(banned => message.channel.send(`Kicked **${banned.user.tag}**`).catch(console.error))
