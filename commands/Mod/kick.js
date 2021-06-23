@@ -1,28 +1,25 @@
-const { GuildCommand } = require('@pat.npm.js/discord-bot-framework');
-const { MessageEmbed } = require('discord.js');
-const { noop } = require('../../util');
+// @ts-check
 
-module.exports = new GuildCommand()
+const { Command, Parameter } = require('@pat.npm.js/discord-bot-framework');
+const { MessageEmbed } = require('discord.js');
+
+module.exports = new Command()
     .setName('kick')
     .setGroup('Mod')
+    .setType('Guild')
     .addPermissions('KICK_MEMBERS')
     .addParameters(
-        {
-            name: 'member',
-            description: 'The ID of a member or the member mention',
-            required: false
-        },
-        {
-            name: 'reason',
-            description: 'The reason for kicking the member',
-            required: false
-        }
+        new Parameter()
+            .setKey('member')
+            .setType('member')
+            .setDescription('The ID of a member or the member mention'),
+        new Parameter()
+            .setKey('reason')
+            .setDescription('The reason for kicking the member')
+            .setRequired(false)
     )
-    .setCallback(async function(message, client, args) {
-        const member = message.mentions.members.first() ?? await message.guild.members.fetch(args.get('member')).catch(noop);
-
-        if (!member || !member.guild)
-            return message.channel.send('You did not mention a member or provide a valid member ID.').catch(console.error);
+    .setCallback(async function(message, args, client) {
+        const member = args.first();
 
         if (!member.kickable)
             return message.channel.send(`I cannot kick **${member.user.tag}** due to role hierarchy.`).catch(console.error);
@@ -38,7 +35,7 @@ module.exports = new GuildCommand()
                     .setFooter('Time kicked', client.user.displayAvatarURL())
                     .setTimestamp();
 
-                message.channel.send({ embed }).catch(console.error);
+                message.channel.send({ embeds: [embed] }).catch(console.error);
             })
             .catch(() => message.channel.send(`I was unable to kick **${member.user.tag}** due to an unknown error`).catch(console.error));
     });

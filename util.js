@@ -1,7 +1,7 @@
 /**
  * No-operation
  */
- function noop() {
+function noop() {
     // noop
 }
 
