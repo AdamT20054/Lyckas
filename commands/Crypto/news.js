@@ -1,8 +1,6 @@
 const { Command, Parameter } = require('@pat.npm.js/discord-bot-framework');
 const { noop } = require('../../util.js');
-const axios = require('axios');
-const dotenv = require('dotenv');
-dotenv.config();
+const { default: axios } = require('axios');
 
 module.exports = new Command()
     .setName('news')
@@ -20,34 +18,23 @@ module.exports = new Command()
     )
     .addPermissions('SEND_MESSAGES')
     .setCallback(async function(message, args, client) {
-        try {
-            
-            
-            const languagee = args.get('language')?.value || 'en';
-            const language = languagee.toLowerCase();
+        const language = args.get('language')?.value.toLowerCase() || 'en';
 
-            const coin = args.get('coin')?.value || 'crypto';
+        const coin = args.get('coin')?.value.toLowerCase() || 'crypto';
 
-            const { data } = await axios.get(
-              `https://newsapi.org/v2/everything?q=${coin}&apiKey=${process.env.NEWS_API_KEY}&pageSize=1&sortBy=publishedAt&language=${language}`
-            );
-      
-            // Destructure useful data from response
-            const {
-              title,
-              source: { name },
-              description,
-              url,
-            } = data.articles[0];
-      
-            return message.reply(
-              `Latest news related to ${coin}:\n
-              Title: ${title}\n
-              Description:${description}\n
-              Source: ${name}\n
-              Link to full article: ${url}`
-            );
-          } catch (err) {
-            return message.reply('There was an error, rate limited by API? Please try again later.');
-          }
-        })
+        const res = await axios.get(`https://newsapi.org/v2/everything?q=${coin}&apiKey=${process.env.NEWS_API_KEY}&pageSize=1&sortBy=publishedAt&language=${language}`).catch(noop);
+
+        if (!res)
+            return message.channel.send('You did not input a valid coin').catch(noop);
+
+        // Destructure useful data from response
+        const { title, source: { name }, description, url } = res.data.articles[0];
+
+        return message.channel.send(
+            `Latest news related to ${coin}:\n
+            Title: ${title}\n
+            Description:${description}\n
+            Source: ${name}\n
+            Link to full article: ${url}`
+        ).catch(console.error);
+    });
