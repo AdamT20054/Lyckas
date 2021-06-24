@@ -1,44 +1,36 @@
-// Require dependencies
-const { Client } = require('discord.js');
-const dotenv = require('dotenv');
-const axios = require('axios');
-const { Command } = require('@pat.npm.js/discord-bot-framework');
-// Load environment variables
-dotenv.config();
+// @ts-check
 
+const { default: axios } = require('axios');
+const { Command, Parameter } = require('@pat.npm.js/discord-bot-framework');
+const { noop } = require('../../util.js');
 
 module.exports = new Command()
-  .setName('price')
-  .setGroup('Crypto')
-  .setType('Guild')
-  .addPermissions('SEND_MESSAGES')
+    .setName('price')
+    .setGroup('Crypto')
+    .setType('Guild')
+    .addParameters(
+        new Parameter()
+            .setKey('coin')
+            .setDescription('adam describe this param pls'),
+        new Parameter()
+            .setKey('currency')
+            .setDescription('adam put description here pls')
+            .setRequired(false)
+    )
+    .addPermissions('SEND_MESSAGES')
+    .setCallback(async function(message, args, client) {
+        const coin = args.first().value;
+        const VSCurrency = args.get('currency')?.value || 'gbp';
 
-  .setCallback(async function(message, args, client) {
-    // Get the params
-    const [command, ...argss] = message.content.split(' ');
+        const res = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=${VSCurrency}`).catch(noop);
 
-    // Check if there are two arguments present
-    if (argss.length !== 2) {
-        return message.reply(
-            'You must provide the crypto and the currency to compare with!'
-            );
-    } else {
-      const [coin, vsCurrency] = argss;
-      try {
-        const { data } = await axios.get(
-          `https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=${vsCurrency}`
-          );
+        if (!res)
+            return message.channel.send('Invalid currency or summat idk').catch(noop);
 
-        if (!data[coin][vsCurrency]) throw Error();
+        const { data } = res;
 
-        return message.reply(
-          `The current price of 1 ${coin} = ${data[coin][vsCurrency]} ${vsCurrency}`
-          );            
-      } catch (err) {
-        return message.reply(
-          `Please check your inputs. For example: !price bitcoin USD`
-        );
-        }
-      }
-    }
-)
+        if (!data[coin]?.[VSCurrency])
+            return message.channel.send('Oh no, look at this, an error!').catch(noop);
+
+        message.channel.send(`The current price of 1 ${coin} = ${data[coin][VSCurrency]} ${VSCurrency.toUpperCase()}`).catch(noop);
+    });

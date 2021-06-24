@@ -2,7 +2,6 @@
 const { Command, Parameter } = require('@pat.npm.js/discord-bot-framework');
 const { MessageEmbed } = require('discord.js');
 
-
 module.exports = new Command()
     .setName('ban')
     .setGroup('Mod')
