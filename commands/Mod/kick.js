@@ -30,7 +30,8 @@ module.exports = new Command()
                     .setThumbnail(member.user.displayAvatarURL())
                     .addField('User Banned', kicked.toString())
                     .addField('Kicked by', message.author.toString())
-                    .addField('Reason', args.get('reason') || 'No reason given')
+                    // @ts-ignore
+                    .addField('Reason', args.get('reason') || `No reason given`)
                     .setFooter('Time kicked', client.user.displayAvatarURL())
                     .setTimestamp();
 

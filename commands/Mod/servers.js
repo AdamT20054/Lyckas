@@ -1,5 +1,4 @@
 const { Command, Parameter } = require('@pat.npm.js/discord-bot-framework');
-const { SSL_OP_EPHEMERAL_RSA } = require('constants');
 const { MessageEmbed } = require('discord.js');
 
 module.exports = new Command()
