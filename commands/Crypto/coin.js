@@ -18,7 +18,7 @@ module.exports = new Command()
     const [command, ...argss] = message.content.split(' ');
 
     // Check if there are two arguments present
-    if (args.length !== 2) {
+    if (argss.length !== 2) {
         return message.reply(
             'You must provide the crypto and the currency to compare with!'
             );
