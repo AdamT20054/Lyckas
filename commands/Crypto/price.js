@@ -11,16 +11,19 @@ module.exports = new Command()
     .addParameters(
         new Parameter()
             .setKey('coin')
-            .setDescription('adam describe this param pls'),
+            .setDescription('Choose what coin you want the price for.'),
         new Parameter()
             .setKey('currency')
-            .setDescription('adam put description here pls')
+            .setDescription('Choose the FIAT pair you want [GBP, USD ext]. This will default to USD if left blank')
             .setRequired(false)
     )
     .addPermissions('SEND_MESSAGES')
     .setCallback(async function(message, args, client) {
-        const coin = args.first().value;
-        const VSCurrency = args.get('currency')?.value || 'gbp';
+        const coinn = args.first().value;
+        const coin = coinn.toLowerCase();
+
+        const VSCurrencyy = args.get('currency')?.value || 'USD';
+        const VSCurrency = VSCurrencyy.toLowerCase();
 
         const res = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=${VSCurrency}`).catch(noop);
 
@@ -30,7 +33,7 @@ module.exports = new Command()
         const { data } = res;
 
         if (!data[coin]?.[VSCurrency])
-            return message.channel.send('Oh no, look at this, an error!').catch(noop);
+            return message.channel.send('Unable to fetch prices. Are you sure that coin and fiat pair exist?\nHere is an example of the command: *!price Bitcoin gbp*').catch(noop);
 
-        message.channel.send(`The current price of 1 ${coin} = ${data[coin][VSCurrency]} ${VSCurrency.toUpperCase()}`).catch(noop);
+        message.channel.send(`Current price of ${coin}***:***  ${data[coin][VSCurrency]} ${VSCurrency.toUpperCase()}`).catch(noop);
     });
