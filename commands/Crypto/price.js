@@ -6,6 +6,7 @@ const { noop } = require('../../util.js');
 
 module.exports = new Command()
     .setName('price')
+    .addAliases('coin')
     .setGroup('Crypto')
     .setType('Guild')
     .addParameters(
@@ -22,8 +23,7 @@ module.exports = new Command()
         const coinn = args.first().value;
         const coin = coinn.toLowerCase();
 
-        const VSCurrencyy = args.get('currency')?.value || 'USD';
-        const VSCurrency = VSCurrencyy.toLowerCase();
+        const VSCurrency = args.get('currency')?.value.toLowerCase() || 'usd';
 
         const res = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=${VSCurrency}`).catch(noop);
 
