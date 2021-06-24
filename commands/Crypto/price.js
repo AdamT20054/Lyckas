@@ -20,8 +20,7 @@ module.exports = new Command()
     )
     .addPermissions('SEND_MESSAGES')
     .setCallback(async function(message, args, client) {
-        const coinn = args.first().value;
-        const coin = coinn.toLowerCase();
+        const coin = args.first().value.toLowerCase();
 
         const VSCurrency = args.get('currency')?.value.toLowerCase() || 'usd';
 
