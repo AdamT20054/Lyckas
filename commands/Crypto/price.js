@@ -28,12 +28,12 @@ module.exports = new Command()
         const res = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=${VSCurrency}`).catch(noop);
 
         if (!res)
-            return message.channel.send('Invalid currency or summat idk').catch(noop);
+            return message.reply('Invalid currency or summat idk').catch(noop);
 
         const { data } = res;
 
         if (!data[coin]?.[VSCurrency])
-            return message.channel.send('Unable to fetch prices. Are you sure that coin and fiat pair exist?\nHere is an example of the command: *!price Bitcoin gbp*').catch(noop);
+            return message.reply('Unable to fetch prices. Are you sure that coin and fiat pair exist?\nHere is an example of the command: *!price Bitcoin gbp*\n\n**PLEASE NOTE:** Abreviations are not implemented yet, please use the currencys full name.').catch(noop);
 
-        message.channel.send(`Current price of ${coin}***:***  ${data[coin][VSCurrency]} ${VSCurrency.toUpperCase()}`).catch(noop);
+        message.reply(`Current price of ${coin}***:***  ${data[coin][VSCurrency]} ${VSCurrency.toUpperCase()}`).catch(noop);
     });

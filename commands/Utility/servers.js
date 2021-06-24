@@ -3,7 +3,7 @@ const { MessageEmbed } = require('discord.js');
 
 module.exports = new Command()
     .setName('servers')
-    .setGroup('Mod')
+    .setGroup('Utility')
     .setType('Guild')
     .addPermissions('ADMINISTRATOR')
     
