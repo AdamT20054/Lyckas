@@ -1,6 +1,6 @@
 // @ts-check
-
 const { Command, Parameter } = require('@pat.npm.js/discord-bot-framework');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = new Command()
     .setName('ban')
@@ -18,7 +18,7 @@ module.exports = new Command()
             .setRequired(false)
     )
     .setCallback(async function(message, args, client) {
-        const member = args.first();
+        const member = args.first().value;
 
         if (member.user.id === message.author.id)
             return message.channel.send(`Nice try, you can't escape that easily!`).catch(console.error);

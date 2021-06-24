@@ -1,5 +1,4 @@
 // @ts-check
-
 const { Command, Parameter } = require('@pat.npm.js/discord-bot-framework');
 
 module.exports = new Command()
@@ -22,7 +21,7 @@ module.exports = new Command()
             .setRequired(false)
     )
     .setCallback(async function(message, args, client) {
-        const member = args.first();
+        const member = args.first().value;
 
         if (!member.bannable)
             return message.channel.send(`I cannot ban **${member.user.tag}** due to role hierarchy.`).catch(console.error);

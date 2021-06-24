@@ -1,5 +1,4 @@
 // @ts-check
-
 const { Command, Parameter } = require('@pat.npm.js/discord-bot-framework');
 const { MessageEmbed } = require('discord.js');
 
@@ -19,8 +18,8 @@ module.exports = new Command()
             .setRequired(false)
     )
     .setCallback(async function(message, args, client) {
-        const member = args.first();
-
+        const member = args.first().value;
+        
         if (!member.kickable)
             return message.channel.send(`I cannot kick **${member.user.tag}** due to role hierarchy.`).catch(console.error);
 
@@ -31,7 +30,8 @@ module.exports = new Command()
                     .setThumbnail(member.user.displayAvatarURL())
                     .addField('User Banned', kicked.toString())
                     .addField('Kicked by', message.author.toString())
-                    .addField('Reason', args.get('reason') || 'No reason given')
+                    // @ts-ignore
+                    .addField('Reason', args.get('reason') || `No reason given`)
                     .setFooter('Time kicked', client.user.displayAvatarURL())
                     .setTimestamp();
 
