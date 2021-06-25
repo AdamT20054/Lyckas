@@ -9,14 +9,16 @@ module.exports = new Command()
     
     .setCallback(async function(message, args, client) {
         
-        let invite = await message.channel.createInvite({
-            maxAge: 0, // 0 = infinite expiration
-            maxUses: 0 // 0 = infinite uses
-          }).catch(console.error);
+        //let invite = await message.channel.createInvite({
+            //maxAge: 0, // 0 = infinite expiration
+           // maxUses: 0 // 0 = infinite uses
+          //}).catch(console.error);
+
+
         client.guilds.cache.forEach((guild) => {
             //console.log(`***${guild.name}***  has a total of ***${guild.memberCount}***  members.`)
             message.channel.send(
-                `***${guild.name}***  has a total of ***${guild.memberCount}***  members. *Invite:*` //*${invite}*`
+                `***${guild.name}***  has a total of ***${guild.memberCount}***  members.` //*Invite:*` *${invite}*`
             )
         })
     })

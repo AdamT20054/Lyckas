@@ -1,6 +1,7 @@
 const { Command, Parameter } = require('@pat.npm.js/discord-bot-framework');
 const { noop } = require('../../util.js');
 const { default: axios } = require('axios');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = new Command()
     .setName('news')
@@ -30,11 +31,24 @@ module.exports = new Command()
         // Destructure useful data from response
         const { title, source: { name }, description, url } = res.data.articles[0];
 
-        return message.channel.send(
-            `Latest news related to ${coin}:\n
-            Title: ${title}\n
-            Description:${description}\n
-            Source: ${name}\n
-            Link to full article: ${url}`
-        ).catch(console.error);
+        new MessageEmbed()
+            .setColor('#0099ff')
+            .setTitle('Some title')
+            .setURL('https://discord.js.org/')
+            .setAuthor('Some name', 'https://i.imgur.com/wSTFkRM.png', 'https://discord.js.org')
+            .setDescription('Some description here')
+            .setThumbnail('https://i.imgur.com/wSTFkRM.png')
+            .addFields(
+                { name: 'Regular field title', value: 'Some value here' },
+                { name: '\u200B', value: '\u200B' },
+                { name: 'Inline field title', value: 'Some value here', inline: true },
+                { name: 'Inline field title', value: 'Some value here', inline: true },
+            )
+            .addField('Inline field title', 'Some value here', true)
+            .setImage('https://i.imgur.com/wSTFkRM.png')
+            .setTimestamp()
+            .setFooter('Some footer text here', 'https://i.imgur.com/wSTFkRM.png');
+
+
+        message.channel.send(MessageEmbed).catch(console.error)
     });
