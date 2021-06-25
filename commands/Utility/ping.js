@@ -8,5 +8,9 @@ module.exports = new Command()
     .addPermissions('')
     
     .setCallback(async function(message, args, client) {
-        message.channel.send(`I am online!`)
-    })
+        message.reply('Calculating ping...').then((resultMessage) => {
+            const ping = resultMessage.createdTimestamp - message.createdTimestamp      
+            resultMessage.edit(`Bot latency: ${ping}ms\nAPI Latency: ${client.ws.ping}ms`)
+          })
+        },
+    )
