@@ -10,9 +10,9 @@ module.exports = new SlashCommand()
         new SlashCommandOption()
             .setName('name')
             .setDescription('Your name!')
-            .setRequired(true)
+            .setRequired(false)
             .setType('STRING')
     )
     .setCallback(function(interaction, command, client) {
-        interaction.reply(`Pong, ${interaction.options.first().value}!`);
+        interaction.reply(`Pong!`);
     });

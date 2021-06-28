@@ -29,11 +29,13 @@ module.exports = new Command()
             const languagee = args.get('language')?.value || 'en';
             const language = languagee.toLowerCase();
 
-            const coin = args.get('coin')?.value || 'crypto';
+
+            const coin = args.get('coin')?.value || `Defi`;
 
             const { data } = await axios.get(
               `https://newsapi.org/v2/everything?q=${coin}&apiKey=${process.env.NEWS_API_KEY}&pageSize=1&sortBy=publishedAt&language=${language}`
             );
+            //console.log(`https://newsapi.org/v2/everything?q=${coin}&apiKey=${process.env.NEWS_API_KEY}&pageSize=1&sortBy=publishedAt&language=${language}`)
       
             // Destructure useful data from response
             const {
@@ -50,13 +52,13 @@ module.exports = new Command()
           let embed = new MessageEmbed()
             .setColor('#0099ff')
             .setTitle(`${title}`)
-            //.setURL(url)
-            .setAuthor(`Latest news for ${coinUP}`)
-            //.setDescription(`Source: ${name}`)
+            .setURL(url)
+            .setAuthor(`Lyckas News`)
+            .setDescription(`*${description}*`)
             //.addField({ name: `Published at:`, value: `${publishedAt}`, inline: true })
             //.setThumbnail(urlToImage)
             .addFields(
-                { name: 'Article description:', value: `${description}` },
+                //{ name: 'Article description:', value: `${description}` },
                 //{ name: '----------------------' },
                 { name: 'Article Content:', value: `${content}`, inline: true },
                 //{ name: 'Inline field title', value: 'Some value here', inline: true },
@@ -64,10 +66,10 @@ module.exports = new Command()
             //.addField('Inline field title', 'Some value here', true)
             .setImage(urlToImage)
             .setTimestamp()
-            .setFooter(`${name}`, 'https://i.imgur.com/wSTFkRM.png');
+            .setFooter(`${name}`, 'https://gatehub.net/blog/content/images/2020/05/Crypto-desctiption-3.jpg');
             
           message.reply({ embeds: [embed], allowedMentions: { parse: [] } });
-          console.log(urlToImage)
+          //console.log(urlToImage)
           } catch (err) {
             console.log(err)
             return message.reply('There was an error, rate limited by API? Please try again later.');
