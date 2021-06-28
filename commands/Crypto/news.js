@@ -66,7 +66,7 @@ module.exports = new Command()
             .setTimestamp()
             .setFooter(`${name}`, 'https://i.imgur.com/wSTFkRM.png');
             
-          message.reply({ embeds: [embed] });
+          message.reply({ embeds: [embed], allowedMentions: { parse: [] } });
           console.log(urlToImage)
           } catch (err) {
             console.log(err)
