@@ -22,7 +22,7 @@ client.once('ready', () => {
 });
 
 client.commands
-    .setPrefix('!')
+    .setPrefix('?')
     .indexDefaults()
     .indexGroups(readdirSync('./commands'))
     .indexCommands(...readdirSync('./commands').map(folder => readdirSync(`./commands/${folder}`).map(file => require(`./commands/${folder}/${file}`))));
