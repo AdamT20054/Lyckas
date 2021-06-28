@@ -27,7 +27,7 @@ module.exports = new Command()
             .then(kicked => {
                 const embed = new MessageEmbed()
                     .setTitle('Member Banned')
-                    .setThumbnail(member.user.displayAvatarURL())
+                    .setThumbnail(kicked.user.displayAvatarURL())
                     .addField('User Banned', kicked.toString())
                     .addField('Kicked by', message.author.toString())
                     // @ts-ignore
