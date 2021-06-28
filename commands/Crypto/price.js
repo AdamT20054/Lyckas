@@ -25,11 +25,9 @@ module.exports = new Command()
         const res = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=${VSCurrency}`).catch(noop);
 
         if (!res)
-            console.log(res)
             return message.reply(`**Could not find the coin you're looking for :(**\nMake sure you use its full name [Bitcoin, not BTC] and if the issue still persists, do !support to join the support server!`).catch(noop);
 
-
-        const { data } = res.body;
+        const { data } = res.data;
 
         if (!data[coin]?.[VSCurrency])
             return message.reply('Unable to fetch prices. Are you sure that coin and fiat pair exist?\nHere is an example of the command: *!price Bitcoin gbp*\n\n**PLEASE NOTE:** Abreviations are not implemented yet, please use the currencys full name.').catch(noop);
