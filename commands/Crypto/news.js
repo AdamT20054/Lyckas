@@ -1,7 +1,10 @@
+// @ts-check
+
 const { Command, Parameter } = require('@pat.npm.js/discord-bot-framework');
 const { noop } = require('../../util.js');
 const axios = require('axios');
 const dotenv = require('dotenv');
+const { MessageEmbed } = require('discord.js');
 dotenv.config();
 
 module.exports = new Command()
@@ -26,11 +29,13 @@ module.exports = new Command()
             const languagee = args.get('language')?.value || 'en';
             const language = languagee.toLowerCase();
 
-            const coin = args.get('coin')?.value || 'crypto';
+
+            const coin = args.get('coin')?.value || `Defi`;
 
             const { data } = await axios.get(
               `https://newsapi.org/v2/everything?q=${coin}&apiKey=${process.env.NEWS_API_KEY}&pageSize=1&sortBy=publishedAt&language=${language}`
             );
+            //console.log(`https://newsapi.org/v2/everything?q=${coin}&apiKey=${process.env.NEWS_API_KEY}&pageSize=1&sortBy=publishedAt&language=${language}`)
       
             // Destructure useful data from response
             const {
@@ -38,16 +43,35 @@ module.exports = new Command()
               source: { name },
               description,
               url,
+              urlToImage,
+              publishedAt,
+              content,
             } = data.articles[0];
+          let coinUP = coin.toUpperCase()
       
-            return message.reply(
-              `Latest news related to ${coin}:\n
-              Title: ${title}\n
-              Description:${description}\n
-              Source: ${name}\n
-              Link to full article: ${url}`
-            );
+          let embed = new MessageEmbed()
+            .setColor('#0099ff')
+            .setTitle(`${title}`)
+            .setURL(url)
+            .setAuthor(`Lyckas News`)
+            .setDescription(`*${description}*`)
+            //.addField({ name: `Published at:`, value: `${publishedAt}`, inline: true })
+            //.setThumbnail(urlToImage)
+            .addFields(
+                //{ name: 'Article description:', value: `${description}` },
+                //{ name: '----------------------' },
+                { name: 'Article Content:', value: `${content}`, inline: true },
+                //{ name: 'Inline field title', value: 'Some value here', inline: true },
+            )
+            //.addField('Inline field title', 'Some value here', true)
+            .setImage(urlToImage)
+            .setTimestamp()
+            .setFooter(`${name}`, 'https://gatehub.net/blog/content/images/2020/05/Crypto-desctiption-3.jpg');
+            
+          message.reply({ embeds: [embed], allowedMentions: { parse: [] } });
+          //console.log(urlToImage)
           } catch (err) {
+            console.log(err)
             return message.reply('There was an error, rate limited by API? Please try again later.');
           }
         })

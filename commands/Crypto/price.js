@@ -1,5 +1,4 @@
 // @ts-check
-
 const { default: axios } = require('axios');
 const { Command, Parameter } = require('@pat.npm.js/discord-bot-framework');
 const { noop } = require('../../util.js');
@@ -19,11 +18,9 @@ module.exports = new Command()
     )
     .addPermissions('SEND_MESSAGES')
     .setCallback(async function(message, args, client) {
-        const coinn = args.first().value;
-        const coin = coinn.toLowerCase();
+        const coin = args.first().value.toLowerCase();
 
-        const VSCurrencyy = args.get('currency')?.value || 'USD';
-        const VSCurrency = VSCurrencyy.toLowerCase();
+        const VSCurrency = args.get('currency')?.value.toLowerCase() || 'usd';
 
         const res = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=${VSCurrency}`).catch(noop);
 

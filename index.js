@@ -15,7 +15,11 @@ const client = new Client({
 
 client.login();
 
-client.once('ready', () => console.log('Lyckas online and ready!'));
+client.once('ready', () => {
+    console.log('Lyckas online and ready!');
+
+    readdirSync('./slashCommands').forEach(file => client.slashCommands.create(require(`./slashCommands/${file}`)));
+});
 
 client.commands
     .setPrefix('!')

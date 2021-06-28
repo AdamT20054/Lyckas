@@ -1,25 +1,8 @@
 {
-  "name": "Lyckas",
-  "version": "1.0.0",
-  "description": "A general purpose discord bot with a focus on moderation and Cryptocurreny integration",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AdamT20054/Lyckas.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/AdamT20054/Lyckas/issues"
-  },
-  "homepage": "https://github.com/AdamT20054/Lyckas#readme",
   "dependencies": {
+    "@pat.npm.js/discord-bot-framework": "github:AhsokaT/discord-bot-framework",
     "axios": "^0.21.1",
-    "discord.js": "^12.5.3",
+    "discord.js": "github:discordjs/discord.js",
     "dotenv": "^10.0.0"
   }
 }
