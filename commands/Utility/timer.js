@@ -1,3 +1,5 @@
+// @ts-check
+
 const { Command, Parameter } = require('@pat.npm.js/discord-bot-framework');
 const { MessageEmbed } = require('discord.js');
 const seconds = 1
@@ -11,7 +13,7 @@ const fetchData = async () => {
   importantData = 'https://ourglass.io/stake is being released at 11pm GMT! Follow the count down below:'
 }
 
- getText = () => {
+const getText = () => {
   return `${importantData}\n\nUpdating in ${counter} minutes...${counterr}`
 }
 
@@ -34,8 +36,6 @@ module.exports = new Command()
     .setName('timer')
     .setGroup('Utility')
     .setType('Guild')
-    .addPermissions('')
-    
     .setCallback(async function(message, args, client) {        
         await fetchData()
         const guild = client.guilds.cache.first()

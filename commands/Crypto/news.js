@@ -3,8 +3,6 @@
 const { Command, Parameter } = require('@pat.npm.js/discord-bot-framework');
 const { noop } = require('../../util.js');
 const axios = require('axios');
-const dotenv = require('dotenv');
-dotenv.config();
 
 module.exports = new Command()
     .setName('news')
