@@ -37,6 +37,9 @@ module.exports = new Command()
 
                 message.channel.send({ embeds: [embed] }).catch(console.error);
             })
-            .catch(() => message.channel.send(`I was unable to kick **${member.user.tag}** due to an unknown error`).catch(console.error));
+            .catch((err) => {
+                console.log(err);
+                message.channel.send(`I was unable to kick **${member.user.tag}** due to an unknown error`).catch(console.error)
+            });
     });
         
