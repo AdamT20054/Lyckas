@@ -2,6 +2,7 @@ const { Command, Parameter } = require('@pat.npm.js/discord-bot-framework');
 const { noop } = require('../../util.js');
 const axios = require('axios');
 const dotenv = require('dotenv');
+const { MessageEmbed } = require('discord.js');
 dotenv.config();
 
 module.exports = new Command()
@@ -40,14 +41,28 @@ module.exports = new Command()
               url,
             } = data.articles[0];
       
-            return message.reply(
-              `Latest news related to ${coin}:\n
-              Title: ${title}\n
-              Description:${description}\n
-              Source: ${name}\n
-              Link to full article: ${url}`
-            );
+          new MessageEmbed()
+            .setColor('#0099ff')
+            .setTitle(`Latest news related to ${coin}`)
+            .setURL(url)
+            .setAuthor('https://1.bp.blogspot.com/-kqOAsduMzBM/Xw56Qkr-A7I/AAAAAAAAAoA/MccBaeM4zpQe6IHdND2J4pBYmnbnqV5ZACLcBGAsYHQ/w1200-h630-p-k-no-nu/ds.jpg', url)
+            .setDescription(`Source: ${name}`)
+            .setThumbnail('https://i.imgur.com/wSTFkRM.png')
+            .addFields(
+                { name: 'Article description:', value: `b${description}` },
+                //{ name: '\u200B', value: '\u200B' },
+                //{ name: 'Inline field title', value: 'Some value here', inline: true },
+                //{ name: 'Inline field title', value: 'Some value here', inline: true },
+            )
+            //.addField('Inline field title', 'Some value here', true)
+            //.setImage('https://i.imgur.com/wSTFkRM.png')
+            .setTimestamp()
+            //.setFooter('Some footer text here', 'https://i.imgur.com/wSTFkRM.png');
+            
+          message.reply({ embeds: [embed] });
+
           } catch (err) {
+            console.log(err)
             return message.reply('There was an error, rate limited by API? Please try again later.');
           }
         })

@@ -10,11 +10,13 @@ module.exports = new Command()
         new Parameter()
             .setKey('member')
             .setType('member')
-            .setDescription('The ID of a member or the member mention'),
+            .setDescription('The ID of a member or the member mention')
+            .setRequired(false),
         new Parameter()
             .setKey('days')
             .setType('number')
-            .setDescription('The number of days the user should be banned for'),
+            .setDescription('The number of days the user should be banned for')
+            .setRequired(false),
         new Parameter()
             .setKey('reason')
             .setDescription('The reason for banning the member')

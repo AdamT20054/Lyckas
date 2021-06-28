@@ -18,8 +18,9 @@
   },
   "homepage": "https://github.com/AdamT20054/Lyckas#readme",
   "dependencies": {
+    "@pat.npm.js/discord-bot-framework": "git+https://github.com/AhsokaT/discord-bot-framework.git",
     "axios": "^0.21.1",
-    "discord.js": "^12.5.3",
+    "discord.js": "^13.0.0-dev.03d3a5cdde5492433d27bbfe46afe0ebf2de5904",
     "dotenv": "^10.0.0"
   }
 }

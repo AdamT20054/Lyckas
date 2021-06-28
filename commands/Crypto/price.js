@@ -5,7 +5,6 @@ const { noop } = require('../../util.js');
 
 module.exports = new Command()
     .setName('price')
-    .addAliases('coin')
     .setGroup('Crypto')
     .setType('Guild')
     .addParameters(

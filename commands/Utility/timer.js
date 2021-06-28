@@ -1,7 +1,7 @@
 const { Command, Parameter } = require('@pat.npm.js/discord-bot-framework');
 const { MessageEmbed } = require('discord.js');
 const seconds = 1
-const startingCounter = 2
+const startingCounter = 16
 let counter = startingCounter
 let counterr = "."
 const startingCounterr = 0
@@ -12,7 +12,7 @@ const fetchData = async () => {
 }
 
  getText = () => {
-  return `${importantData}\n\nUpdating in ${counter} minutes...${counterr}`
+  return `${importantData}\n\Releasing in ${counter} minutes...${counterr}`
 }
 
 const updateCounter = async (messagee) => {
@@ -38,8 +38,8 @@ module.exports = new Command()
     
     .setCallback(async function(message, args, client) {        
         await fetchData()
-        const guild = client.guilds.cache.first()
-        const channel = guild.channels.cache.get('820358814217928705')
+        //const guild = client.guilds.cache.get("8203474685368729601")
+        const channel = client.channels.cache.get('820358814217928705')
 
         const messagee = await channel.send(getText())
         updateCounter(messagee)
