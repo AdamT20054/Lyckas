@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@pat.npm.js/discord-bot-framework": "github:AhsokaT/discord-bot-framework",
+    "axios": "^0.21.1",
+    "discord.js": "github:discordjs/discord.js",
+    "dotenv": "^10.0.0"
+  }
+}
