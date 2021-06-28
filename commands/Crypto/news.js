@@ -3,12 +3,9 @@
 const { Command, Parameter } = require('@pat.npm.js/discord-bot-framework');
 const { noop } = require('../../util.js');
 const axios = require('axios');
-<<<<<<< HEAD
 const dotenv = require('dotenv');
 const { MessageEmbed } = require('discord.js');
 dotenv.config();
-=======
->>>>>>> 12bdc1d9d746617d04a3c298ac4bf7adef32db25
 
 module.exports = new Command()
     .setName('news')
@@ -44,28 +41,33 @@ module.exports = new Command()
               source: { name },
               description,
               url,
+              urlToImage,
+              publishedAt,
+              content,
             } = data.articles[0];
+          let coinUP = coin.toUpperCase()
       
-          new MessageEmbed()
+          let embed = new MessageEmbed()
             .setColor('#0099ff')
-            .setTitle(`Latest news related to ${coin}`)
-            .setURL(url)
-            .setAuthor('https://1.bp.blogspot.com/-kqOAsduMzBM/Xw56Qkr-A7I/AAAAAAAAAoA/MccBaeM4zpQe6IHdND2J4pBYmnbnqV5ZACLcBGAsYHQ/w1200-h630-p-k-no-nu/ds.jpg', url)
-            .setDescription(`Source: ${name}`)
-            .setThumbnail('https://i.imgur.com/wSTFkRM.png')
+            .setTitle(`${title}`)
+            //.setURL(url)
+            .setAuthor(`Latest news for ${coinUP}`)
+            //.setDescription(`Source: ${name}`)
+            //.addField({ name: `Published at:`, value: `${publishedAt}`, inline: true })
+            //.setThumbnail(urlToImage)
             .addFields(
-                { name: 'Article description:', value: `b${description}` },
-                //{ name: '\u200B', value: '\u200B' },
-                //{ name: 'Inline field title', value: 'Some value here', inline: true },
+                { name: 'Article description:', value: `${description}` },
+                //{ name: '----------------------' },
+                { name: 'Article Content:', value: `${content}`, inline: true },
                 //{ name: 'Inline field title', value: 'Some value here', inline: true },
             )
             //.addField('Inline field title', 'Some value here', true)
-            //.setImage('https://i.imgur.com/wSTFkRM.png')
+            .setImage(urlToImage)
             .setTimestamp()
-            //.setFooter('Some footer text here', 'https://i.imgur.com/wSTFkRM.png');
+            .setFooter(`${name}`, 'https://i.imgur.com/wSTFkRM.png');
             
           message.reply({ embeds: [embed] });
-
+          console.log(urlToImage)
           } catch (err) {
             console.log(err)
             return message.reply('There was an error, rate limited by API? Please try again later.');
