@@ -1,9 +1,14 @@
+// @ts-check
+
 const { Command, Parameter } = require('@pat.npm.js/discord-bot-framework');
 const { noop } = require('../../util.js');
 const axios = require('axios');
+<<<<<<< HEAD
 const dotenv = require('dotenv');
 const { MessageEmbed } = require('discord.js');
 dotenv.config();
+=======
+>>>>>>> 12bdc1d9d746617d04a3c298ac4bf7adef32db25
 
 module.exports = new Command()
     .setName('news')
