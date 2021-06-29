@@ -1,5 +1,5 @@
 // @ts-check
-const axios = require('axios');
+const { default: axios } = require('axios');
 const { Command, Parameter } = require('@pat.npm.js/discord-bot-framework');
 const { noop } = require('../../util.js');
 const { MessageEmbed } = require('discord.js');
@@ -30,9 +30,10 @@ module.exports = new Command()
 
             // Grabbing all the data we need from the links and assigning each link's data a variable to use for our reply.
         
-            const { info } = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${VSCurrency}&ids=${coin}&order=market_cap_desc&per_page=100&page=1&sparkline=false`).catch(noop);        
-            // 
+            const res = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${VSCurrency}&ids=${coin}&order=market_cap_desc&per_page=100&page=1&sparkline=false`).catch(noop);        
 
+            if (!res)
+                return message.channel.send('You did not provide a valid currency.');
 
 
             // Checking to see if the coin provided is valid, this is the only check we need as the data is grabbed from the same variables in the URL.
@@ -54,7 +55,7 @@ module.exports = new Command()
                 high_24h,
                 low_24h,
                 price_change_24h,
-            } = info;
+            } = res.data[0];
             console.log(current_price, id, symbol, name, image, current_price, market_cap, market_cap_rank, fully_diluted_valuation, total_volume, high_24h,low_24h, price_change_24h,)
         
 
