@@ -30,7 +30,7 @@ module.exports = new Command()
 
             // Grabbing all the data we need from the links and assigning each link's data a variable to use for our reply.
         
-            const info = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${VSCurrency}&ids=${coin}&order=market_cap_desc&per_page=100&page=1&sparkline=false`).catch(noop);        
+            const { info } = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${VSCurrency}&ids=${coin}&order=market_cap_desc&per_page=100&page=1&sparkline=false`).catch(noop);        
             // 
 
 
