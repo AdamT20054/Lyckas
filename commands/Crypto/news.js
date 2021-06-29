@@ -17,7 +17,7 @@ module.exports = new Command()
             .setRequired(false),
         new Parameter()
             .setKey('language')
-            .setDescription('Choose the language you want the bot to find an article in:\nAR,DE,EN,ES,FR,HE,IT,NL,NO,PT,rRU,SE,UD,ZH')
+            .setDescription('Choose the language you want the bot to find an article in:\nAR,DE,EN,ES,FR,HE,IT,NL,NO,PT,RU,SE,UD,ZH')
             .setRequired(false)
     )
     .addPermissions('SEND_MESSAGES')
@@ -35,11 +35,13 @@ module.exports = new Command()
 
 
             // Generate results for the given search query based on user inputs and saves it as the const 'data' to be used next.
+            // @ts-ignore
             const { data } = await axios.get(
               `https://newsapi.org/v2/everything?q=${query}&apiKey=${process.env.NEWS_API_KEY}&pageSize=1&sortBy=publishedAt&language=${language}`
             );
             // If this bit is red on VisualStudio dont worry, it still works 100% fine if you haven't changed anything that may of broken it.
 
+              
             // Destructure useful data from the first article provided by the response (data.articles[0]) and turn them into usable variables for our embed response.
             const {
               title,
@@ -49,8 +51,7 @@ module.exports = new Command()
               urlToImage,
               publishedAt,
             } = data.articles[0];
-            // data.articles[0] is the first article, data.articles[1] is the 2nd, [3] is the 3rd and so on...
-
+            
 
           // Construct the embed.
           let embed = new MessageEmbed()
@@ -61,7 +62,7 @@ module.exports = new Command()
             .setDescription(`*${description}*`)
             .setImage(urlToImage)
             .setTimestamp()
-            .setFooter(`${name} | Published at ${publishedAt}`, 'https://gatehub.net/blog/content/images/2020/05/Crypto-desctiption-3.jpg');
+            .setFooter(`${name}`, 'https://gatehub.net/blog/content/images/2020/05/Crypto-desctiption-3.jpg');
           
           // Send the embed when the command is called.
           message.reply({ embeds: [embed], allowedMentions: { parse: [] } });
