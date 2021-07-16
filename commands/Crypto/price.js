@@ -24,14 +24,17 @@ module.exports = new Command()
     
         // Takes the 'currency' value and assignes it as the 'VSCurrency' variables value, or uses usd as the 'VSCurrency' variables value if no value is provided
         const VSCurrency = args.get('currency')?.value.toLowerCase() || 'usd';
+        const VSCurrencyU = args.get('currency')?.value.toUpperCase() || 'USD';
+        const coin1U = coin.charAt(0).toUpperCase() + coin.slice(1);
+
+        if (VSCurrencyU == 'USD') {VSCurrencyUS = '$'};
 
         // Grabbing all the data we need from the links and assigning each link's data a variable to use for our reply.
         const res = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${VSCurrency}&ids=${coin}&order=market_cap_desc&per_page=100&page=1&sparkline=false`).catch(noop);        
 
         if (!res)
-            return message.channel.send(`**Could not find the coin you're looking for :(**\nMake sure you use its full name [Bitcoin, not BTC] and the currency is valid. If the issue still persists, do !support to join the support server!`).catch(noop);
+            return message.reply(`**Could not find the coin you're looking for :(**\nMake sure you use its full name [Bitcoin, not BTC] and the currency is valid. If the issue still persists, do !support to join the support server!`).catch(noop);
 
-        // Checking to see if the coin provided is valid, this is the only check we need as the data is grabbed from the same variables in the URL.
 
         // Turning our raw data provided by the links into usable data.
         const {
@@ -46,30 +49,36 @@ module.exports = new Command()
             total_volume,
             high_24h,
             low_24h,
-            price_change_24h
+            price_change_24h,
+            price_change_percentage_24h,
+            ath,
+            ath_change_percentage,
+            circulating_supply,
+
         } = res.data[0];
 
-        console.log(current_price, id, symbol, name, image, current_price, market_cap, market_cap_rank, fully_diluted_valuation, total_volume, high_24h,low_24h, price_change_24h);
+        const ath_change_percentage_normal = Number(ath_change_percentage.toFixed(2))
+        const price_change_24h_normal = Number(price_change_24h.toFixed(2))
+        const price_change_percentage_24h_normal = Number(price_change_percentage_24h.toFixed(2))
 
-
-        // Checks to see if it has been given data to present, if no data is here then it will give an error message in chat.
-        //if (!info[coin]?.[VSCurrency])
-        //    return message.reply('Unable to fetch prices. Are you sure that coin and fiat pair exist?\nHere is an example of the command: *!price Bitcoin gbp*\n\n**PLEASE NOTE:** Abreviations are not implemented yet, please use the currencies full name.').catch(noop);
-
+        //console.log(current_price, id, symbol, name, image, current_price, market_cap, market_cap_rank, fully_diluted_valuation, total_volume, high_24h,low_24h, price_change_24h);
 
         // Constructing the embed that will hold the data and present it to the chat
-        //let embed1 = new MessageEmbed()
-        //    .setColor('#0099ff')
-        //    .setTitle(`${current_price}`)
-        //    .setURL('google.com')
-        //    .setAuthor(`Lyckas News`)
-        //    .setDescription(`*descriptio}*`)
-        //    //.setImage(urlToImage)
-        //    .setTimestamp()
-        //    .setFooter(`footer`, 'https://gatehub.net/blog/content/images/2020/05/Crypto-desctiption-3.jpg');
+        let embed = new MessageEmbed()
+            .setColor('#0099ff')
+            .setTitle(`Current Price: __${current_price}${VSCurrencyUS}__`)
+            //.setURL('https://gatehub.net/blog/content/images/2020/05/Crypto-desctiption-3')
+            .setAuthor(`${coin1U} Price [${VSCurrencyU}]`)
+            //.setDescription()
+            .setThumbnail(`${image}`)
+            .addFields(
+                { name: 'Bitcoin stats:', value: `**24hr:** \`${price_change_24h_normal}$ (${price_change_percentage_24h_normal}%)\`\n**24hr High:** \`${high_24h}\`\n**24hr Low:** \`${low_24h}\`\n**ATH:** \`${ath}\`\n**Market Cap:** \`${market_cap} (${ath_change_percentage_normal}%)\`\n**Rank:** \`${market_cap_rank}\`` }
+            )
+            .setTimestamp()
+            .setFooter(`Support: discord.gg/NRgU4Ybk7V`, 'https://i.imgur.com/CLAoaG9.png');
 
     
         // Send the embed when the command is called.
-        message.reply(`${current_price}`)
-        //message.reply({ embeds: [embed1], allowedMentions: { parse: [] } }).catch(noop);
+        //message.reply(`${current_price}, ${market_cap}`)
+        message.channel.send({ embeds: [embed] });
     });

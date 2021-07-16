@@ -1,6 +1,7 @@
 // @ts-check
 
 const { SlashCommand, SlashCommandOption } = require('@pat.npm.js/discord-bot-framework');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = new SlashCommand()
     .setName('ping')
