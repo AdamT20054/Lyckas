@@ -1,4 +1,5 @@
 // @ts-check
+// @ts-ignore
 const { default: axios } = require("axios");
 const { Command, Parameter } = require("@pat.npm.js/discord-bot-framework");
 const { noop } = require("../../util.js");
