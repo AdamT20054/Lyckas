@@ -2,7 +2,7 @@
  * No-operation
  */
 function noop() {
-    // noop
+  // noop
 }
 
 /**
@@ -10,10 +10,10 @@ function noop() {
  * @param {*} val
  */
 function toString(val) {
-    return `${val}`;
+  return `${val}`;
 }
 
 module.exports = {
-    noop,
-    toString
-}
+  noop,
+  toString,
+};
