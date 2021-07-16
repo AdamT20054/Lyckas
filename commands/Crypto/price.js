@@ -42,7 +42,7 @@ module.exports = new Command()
             )
             .catch(noop);
 
-        if (!res)
+        if (!res || res.data.length === 0)
             return message
                 .reply(
                     `**Could not find the coin you're looking for :(**\nMake sure you use its full name [Bitcoin, not BTC] and the currency is valid. If the issue still persists, do !support to join the support server!`
