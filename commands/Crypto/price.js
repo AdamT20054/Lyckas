@@ -29,6 +29,7 @@ module.exports = new Command()
         const VSCurrency = args.get("currency")?.value.toLowerCase() || "usd";
         const VSCurrencyU = args.get("currency")?.value.toUpperCase() || "USD";
         const coin1U = coin.charAt(0).toUpperCase() + coin.slice(1);
+        let VSCurrencyUS = '';
 
         if (VSCurrencyU == "USD") {
             VSCurrencyUS = "$";
