@@ -68,9 +68,7 @@ module.exports = new Command()
             circulating_supply,
         } = res.data[0];
 
-        const ath_change_percentage_normal = Number(
-            ath_change_percentage.toFixed(2)
-        );
+        const ath_change_percentage_normal = Number(ath_change_percentage.toFixed(2));
         const price_change_24h_normal = Number(price_change_24h.toFixed(2));
         const price_change_percentage_24h_normal = Number(
             price_change_percentage_24h.toFixed(2)
